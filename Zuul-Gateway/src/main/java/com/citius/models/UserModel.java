@@ -1,16 +1,20 @@
 package com.citius.models;
 
+import java.time.LocalDate;
+
 public class UserModel {
 
 	private Long userID;
+	private String username;
 	private String userTitle;
 	private String userFirstName;
 	private String userLastName;
 	private String userEmail;
-	private String userDOB;
+	private LocalDate userDOB;
 	private String userContactNo;
 	private String password;
-	private UserGroup userGroup;
+	private Boolean isActive;
+	// private UserGroup userGroup;
 
 	public UserModel() {
 		// TODO Auto-generated constructor stub
@@ -56,11 +60,11 @@ public class UserModel {
 		this.userEmail = userEmail;
 	}
 
-	public String getUserDOB() {
+	public LocalDate getUserDOB() {
 		return userDOB;
 	}
 
-	public void setUserDOB(String userDOB) {
+	public void setUserDOB(LocalDate userDOB) {
 		this.userDOB = userDOB;
 	}
 
@@ -80,12 +84,20 @@ public class UserModel {
 		this.password = password;
 	}
 
-	public UserGroup getUserGroup() {
-		return userGroup;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserGroup(UserGroup userGroup) {
-		this.userGroup = userGroup;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
