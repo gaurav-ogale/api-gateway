@@ -17,7 +17,6 @@ import com.citius.services.CustomUserDetailsService;
 import com.citius.utilities.JwtAuthenticationEntryPoint;
 
 @Configuration
-
 @EnableWebSecurity
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -38,7 +37,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-		//return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		// return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
 	@Bean
@@ -49,11 +48,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/login", "/register").permitAll().anyRequest().authenticated().and()
-				.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/login", "/register", "/forgotCredentials/{username}").permitAll()
+				.anyRequest().authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
-
 
 }

@@ -5,7 +5,10 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -23,7 +26,10 @@ public class TokenManager implements Serializable {
 	private String jwtSecret;
 
 	public String generateJwtToken(UserDetails userDetails) {
+
+		
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("Roles",userDetails.getAuthorities());
 		return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))

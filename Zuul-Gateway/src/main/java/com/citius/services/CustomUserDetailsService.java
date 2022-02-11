@@ -66,9 +66,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "application/json");
+		@SuppressWarnings("unchecked")
 		HttpEntity requestEntity = new HttpEntity(user, headers);
 
-		ResponseEntity<?> responseEntity = restTemplate.postForObject("http://USER-SERVIC/user", requestEntity,
+		ResponseEntity<?> responseEntity = restTemplate.postForObject("http://USER-SERVICE/user", requestEntity,
 				ResponseEntity.class);
 
 		if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -77,6 +78,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 
+	}
+
+	public HttpStatus passwordReset(String userName) {
+
+		String res = restTemplate.getForObject("http://USER-SERVICE/reset/" + userName, String.class);
+		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 
 }

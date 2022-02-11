@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,6 @@ import com.citius.models.UserModel;
 import com.citius.services.CustomUserDetailsService;
 
 @RestController
-@CrossOrigin
 public class ApiGatewayController {
 
 	@Autowired
@@ -52,12 +52,17 @@ public class ApiGatewayController {
 		final String jwtToken = tokenManager.generateJwtToken(userDetails);
 		return ResponseEntity.ok(new JwtResponse(jwtToken));
 	}
-	
+
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody UserModel user){
-		HttpStatus status= customDetailsService.registerUser(user);		
-		return new ResponseEntity<HttpStatus>(status); 
-		
+	public ResponseEntity<?> registerUser(@RequestBody UserModel user) {
+		HttpStatus status = customDetailsService.registerUser(user);
+		return new ResponseEntity<HttpStatus>(status);
+	}
+
+	@GetMapping("/forgotCredentials/{username}")
+	public ResponseEntity<?> forgetCredentials(@PathVariable String username) {
+		HttpStatus status = customDetailsService.passwordReset(username);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
 }
