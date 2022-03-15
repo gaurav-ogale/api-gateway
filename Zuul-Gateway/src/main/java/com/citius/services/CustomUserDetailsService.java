@@ -1,10 +1,7 @@
 
 package com.citius.services;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,7 +11,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.citius.models.AuthUser;
 import com.citius.models.User;
 import com.citius.models.UserGroup;
 import com.citius.models.UserModel;
@@ -58,7 +53,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	}
 
-	public HttpStatus registerUser(UserModel user) {
+	public UserModel registerUser(UserModel user) {
 
 		if (user != null) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -69,14 +64,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		@SuppressWarnings("unchecked")
 		HttpEntity requestEntity = new HttpEntity(user, headers);
 
-		ResponseEntity<?> responseEntity = restTemplate.postForObject("http://USER-SERVICE/user", requestEntity,
-				ResponseEntity.class);
+		UserModel user1 = restTemplate.postForObject("http://USER-SERVICE/user", requestEntity,
+				UserModel.class);
 
-		if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
-			return HttpStatus.CREATED;
-		}
-
-		return HttpStatus.INTERNAL_SERVER_ERROR;
+		return user1;
 
 	}
 

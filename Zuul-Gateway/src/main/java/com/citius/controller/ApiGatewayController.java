@@ -8,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,9 +53,9 @@ public class ApiGatewayController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody UserModel user) {
-		HttpStatus status = customDetailsService.registerUser(user);
-		return new ResponseEntity<HttpStatus>(status);
+	public UserModel registerUser(@RequestBody UserModel user) {
+		UserModel status = customDetailsService.registerUser(user);
+		return status;
 	}
 
 	@GetMapping("/forgotCredentials/{username}")

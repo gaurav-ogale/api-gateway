@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class UserModel {
 
-	private Long userID;
+	private Long userId;
 	private String username;
 	private String userTitle;
 	private String userFirstName;
@@ -20,12 +20,12 @@ public class UserModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getUserTitle() {
